@@ -1,0 +1,54 @@
+{
+  "name": "collection-visit",
+  "description": "Visit a method over the items in an object, or map visit over the objects in an array.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/collection-visit",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "jonschlinkert/collection-visit",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/collection-visit/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "map-visit": "^0.1.0",
+    "object-visit": "^0.1.0"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "keywords": [
+    "array",
+    "arrays",
+    "context",
+    "function",
+    "helper",
+    "invoke",
+    "key",
+    "map",
+    "method",
+    "object",
+    "objects",
+    "value",
+    "visit",
+    "visitor"
+  ],
+  "verbiage": {
+    "related": {
+      "list": [
+        "object-visit",
+        "map-visit"
+      ]
+    }
+  }
+}
