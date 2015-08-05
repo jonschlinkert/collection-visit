@@ -11,10 +11,17 @@ var mapVisit = require('map-visit');
 var visit = require('object-visit');
 
 function collectionVisit(collection, method, val) {
-  if (Array.isArray(val)) {
-    mapVisit(collection, method, val);
+  var result;
+  if (typeof val === 'string' && (method in collection)) {
+    result = collection[method](val);
+  } else if (Array.isArray(val)) {
+    result = mapVisit(collection, method, val);
   } else {
-    visit(collection, method, val);
+    result = visit(collection, method, val);
+  }
+
+  if (typeof result !== 'undefined') {
+    return result;
   }
   return collection;
 }
