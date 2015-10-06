@@ -7,17 +7,17 @@
 
 'use strict';
 
-var mapVisit = require('map-visit');
-var visit = require('object-visit');
+var utils = require('./utils');
 
 function collectionVisit(collection, method, val) {
   var result;
+
   if (typeof val === 'string' && (method in collection)) {
     result = collection[method](val);
   } else if (Array.isArray(val)) {
-    result = mapVisit(collection, method, val);
+    result = utils.mapVisit(collection, method, val);
   } else {
-    result = visit(collection, method, val);
+    result = utils.visit(collection, method, val);
   }
 
   if (typeof result !== 'undefined') {
