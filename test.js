@@ -1,8 +1,8 @@
 'use strict';
 
-/* deps: mocha */
+require('mocha');
+require('should');
 var assert = require('assert');
-var should = require('should');
 var visit = require('./');
 
 describe('arrays', function () {
@@ -30,6 +30,16 @@ describe('arrays', function () {
         c: 'c',
         d: { e: 'f' }
       });
+    });
+
+    it('should work when the value is a string:', function () {
+      ctx.setName = function (str) {
+        this.name = str;
+      };
+
+      visit(ctx, 'setName', 'foo');
+      assert(ctx.name);
+      assert(ctx.name === 'foo');
     });
   });
 });
@@ -67,23 +77,23 @@ describe('objects', function () {
     it('should throw an error when invalid args are passed:', function () {
       (function () {
         visit();
-      }).should.throw('object-visit expects `thisArg` to be an object.');
+      }).should.throw('expected "undefined" to be an object');
 
       (function () {
         visit('foo', 'bar');
-      }).should.throw('object-visit expects `thisArg` to be an object.');
+      }).should.throw('expected "foo" to be an object');
 
       (function () {
         visit({}, 'foo');
-      }).should.throw('object-visit expects `target` to be an object.');
+      }).should.throw('expected "undefined" to be an object');
 
       (function () {
         visit({}, 'bar', 'bar');
-      }).should.throw('object-visit expects `target` to be an object.');
+      }).should.throw('expected "bar" to be an object');
 
       (function () {
         visit({}, {}, {});
-      }).should.throw('object-visit expects `method` to be a string');
+      }).should.throw('expected "[object Object]" to be a string');
     });
   });
 });
