@@ -5,9 +5,12 @@
  */
 
 var utils = require('lazy-cache')(require);
-require = utils; // trick browserify
+var fn = require;
+
+require = utils; // trick browserify so we can lazy-cache
 require('map-visit');
 require('object-visit', 'visit');
+require = fn;
 
 /**
  * Expose `utils`
