@@ -1,91 +1,90 @@
 'use strict';
 
 require('mocha');
-require('should');
 var assert = require('assert');
+var clone = require('clone-deep');
 var visit = require('./');
+var ctx;
 
-describe('arrays', function() {
-  var ctx = {
+describe('collection-visit', function() {
+  var fixture = {
+    options: {},
     data: {},
     set: function(key, value) {
-      if (Array.isArray(key)) {
-        visit(ctx, 'set', key);
-      } else if (typeof key === 'object') {
-        visit(ctx, 'set', key);
+      if (typeof key !== 'string') {
+        visit(this, 'set', key, value);
       } else {
-        ctx.data[key] = value;
+        this.data[key] = value;
       }
     }
   };
 
-  describe('visit', function() {
-    it('should call visit on every value in the given object:', function() {
-      ctx.set('a', 'a');
-      ctx.set([{b: 'b'}, {c: 'c'}]);
-      ctx.set({d: {e: 'f'}});
-      ctx.data.should.eql({
-        a: 'a',
-        b: 'b',
-        c: 'c',
-        d: { e: 'f' }
+  beforeEach(function() {
+    ctx = clone(fixture);
+  });
+
+  describe('arrays', function() {
+    describe('visit', function() {
+      it('should call visit on every value in the given object:', function() {
+        ctx.set('a', 'a');
+        ctx.set([{b: 'b'}, {c: 'c'}]);
+        ctx.set({d: {e: 'f'}});
+        assert.deepEqual(ctx.data, {
+          a: 'a',
+          b: 'b',
+          c: 'c',
+          d: { e: 'f' }
+        });
+      });
+
+      it('should pass the second argument to set:', function() {
+        ctx.set(['a', 'b'], function() {});
+        assert.equal(typeof ctx.data.a, 'function');
+        assert.equal(typeof ctx.data.b, 'function');
+      });
+
+      it('should work when the value is a string:', function() {
+        ctx.setName = function(str) {
+          this.name = str;
+        };
+
+        visit(ctx, 'setName', 'foo');
+        assert.equal(ctx.name, 'foo');
       });
     });
-
-    it('should work when the value is a string:', function() {
-      ctx.setName = function(str) {
-        this.name = str;
-      };
-
-      visit(ctx, 'setName', 'foo');
-      assert(ctx.name);
-      assert(ctx.name === 'foo');
-    });
   });
-});
 
-describe('objects', function() {
-  var obj = {
-    a: 'a',
-    b: 'b',
-    c: 'c',
-    d: { e: 'f' }
-  };
+  describe('objects', function() {
+    describe('visit', function() {
+      it('should call visit on every value in the given object:', function() {
+        ctx.set('a', 'a');
+        ctx.set('b', 'b');
+        ctx.set('c', 'c');
+        ctx.set({d: {e: 'f'}});
 
-  var ctx = {
-    data: {},
-    set: function(key, value) {
-      if (typeof key === 'object') {
-        visit(ctx, 'set', key);
-      } else {
-        ctx.data[key] = value;
-      }
-    }
-  };
-
-  describe('visit', function() {
-    it('should call visit on every value in the given object:', function() {
-      ctx.set('a', 'a');
-      ctx.set('b', 'b');
-      ctx.set('c', 'c');
-      ctx.set({d: {e: 'f'}});
-      ctx.data.should.eql(obj);
+        assert.deepEqual(ctx.data, {
+          a: 'a',
+          b: 'b',
+          c: 'c',
+          d: { e: 'f' }
+        });
+      });
     });
   });
 
   describe('errors', function() {
     it('should throw an error when invalid args are passed:', function() {
-      (function() {
+      assert.throws(function() {
         visit();
-      }).should.throw('object-visit expects `thisArg` to be an object.');
+      });
 
-      (function() {
+      assert.throws(function() {
         visit('foo', 'bar');
-      }).should.throw('object-visit expects `thisArg` to be an object.');
+      });
 
-      (function() {
+      assert.throws(function() {
         visit({}, {}, {});
-      }).should.throw('object-visit expects `method` name to be a string');
+      });
     });
   });
 });

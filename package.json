@@ -4,14 +4,17 @@
   "version": "0.2.3",
   "homepage": "https://github.com/jonschlinkert/collection-visit",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "contributors": [
+    "Brian Woodward <brian.woodward@gmail.com> (https://twitter.com/doowb)",
+    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)"
+  ],
   "repository": "jonschlinkert/collection-visit",
   "bugs": {
     "url": "https://github.com/jonschlinkert/collection-visit/issues"
   },
   "license": "MIT",
   "files": [
-    "index.js",
-    "utils.js"
+    "index.js"
   ],
   "main": "index.js",
   "engines": {
@@ -20,23 +23,10 @@
   "scripts": {
     "test": "mocha"
   },
-  "dependencies": {
-    "lazy-cache": "^2.0.1",
-    "map-visit": "^0.1.5",
-    "object-visit": "^0.3.4"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-format-md": "^0.1.10",
-    "gulp-istanbul": "^1.0.0",
-    "gulp-mocha": "^3.0.0",
-    "mocha": "^3.0.1",
-    "should": "^10.0.0"
-  },
   "keywords": [
     "array",
     "arrays",
+    "collection",
     "context",
     "function",
     "helper",
@@ -54,8 +44,8 @@
     "related": {
       "list": [
         "base-methods",
-        "object-visit",
-        "map-visit"
+        "map-visit",
+        "object-visit"
       ]
     },
     "toc": false,
@@ -73,5 +63,18 @@
       "verb",
       "verb-generate-readme"
     ]
+  },
+  "dependencies": {
+    "map-visit": "^1.0.0",
+    "object-visit": "^1.0.0"
+  },
+  "devDependencies": {
+    "clone-deep": "^0.2.4",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-format-md": "^0.1.12",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^3.0.0",
+    "mocha": "^3.2.0"
   }
 }
